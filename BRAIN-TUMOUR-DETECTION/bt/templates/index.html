@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BRAIN TUMOR DETECTION</title>
+    <link rel="stylesheet" href="../static/styles/index_page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+
+    <body class='bg'>
+            <div class="content" style="background-color: rgba(43, 22, 22, 0.8) ; color:rgb(253, 242, 242);">
+                <h1 style="text-align: center">BRAIN TUMOUR DETECTION</h1>
+
+                <div class="form">
+<!---->
+                    <button type="text" style="padding: 10px 25px;font-size: 15px;font-weight: 500;border: none;
+                        outline: none; background: #fff;color: #5256ad;border-radius: 5px;text-align: center;
+                        transform: translateX(105%) ">Upload MRI Scan of Brain</button>
+                    <br><br>
+                    <!-- ----------------------------------------------------------------- -->
+                    <div class="drag-area">
+                    <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <header>Drag & Drop to Upload File</header>
+                    <span>OR</span>
+                    <button >Browse File</button>
+                    <input type="file" multiple="multiple" hidden>
+                    </div>
+
+                    <br>
+
+                    <form action="/prediction" method="POST" autocomplete="on">
+
+                        <input type="hidden" id='image' name="image" value="">
+                        <button type="submit" style="padding: 10px 25px;font-size: 20px;font-weight: 500;border: none;
+                        outline: none; background: #fff;color: #5256ad;border-radius: 5px;cursor: pointer;text-align: center;
+                        transform: translateX(110%) ">Classify MRI Scan</button>
+                    </form>
+
+                    <script >
+                             // selecting all required elements
+                            const dropArea = document.querySelector(".drag-area");
+                            dragText=dropArea.querySelector("header");
+                            button=dropArea.querySelector("button");
+                            input=dropArea.querySelector("input");
+
+                            let file; //this is a global variable and we'll use it inside multiple functions
+
+                            button.onclick=()=>{
+                                input.click();
+                            }
+
+                            input.addEventListener("change",function(){
+                                file=this.files[0];
+                                showFile();
+                                dropArea.classList.add("active");
+                            });
+
+
+                            // If user drags file over dragarea
+                            dropArea.addEventListener("dragover",(event)=>{
+                                event.preventDefault(); //preventing from default behaviour
+                                console.log("File is over DragArea");
+                                dropArea.classList.add("active");
+                                dragText.textContent="Release to Upload File";
+                                });
+
+                            // If user leaved dragged file from dragarea
+                            dropArea.addEventListener("dragleave",()=>{
+                                console.log("File is outside dragarea");
+                                dropArea.classList.remove("active");
+                                dragText.textContent="Drag & Drop to Upload File";
+                                });
+
+                            // If user drops file over dragarea
+                            dropArea.addEventListener("drop",(event)=>{
+                                event.preventDefault(); //preventing from default behaviour
+                                console.log("File is dropped on dragarea");
+                                file=event.dataTransfer.files[0];
+                                showFile();
+                                });
+
+                            function showFile(){
+                                let fileType=file.type;
+                                console.log(file);
+
+                                let validExtensions= ["image/jpeg","image/jpg","image/png","image/jpeg",
+                                                        "image/gif","image/pdf","image/bmp","image/tiff"]
+                                if(validExtensions.includes(fileType)){
+                                console.log("This is an Image file");
+                                let fileReader=new FileReader();
+                                fileReader.onload=()=>{
+                                let fileURL=fileReader.result; //fileurl contains BAse64 image url
+                                document.getElementById("image").value = fileURL;
+                                console.log(fileURL);
+                                console.log(document.getElementById("image").value)
+                                let imgTag=`<img src="${fileURL}" alt="">`;
+                                dropArea.innerHTML = imgTag;
+                                }
+                                fileReader.readAsDataURL(file);
+                                }else{
+                                alert("This is not an Image file !");
+                                dropArea.classList.remove("active");
+                                }
+                            }
+                    </script>
+
+                   <!-- ----------------------------------------------------------------- -->
+
+                </div>
+            </div>
+
+            <div style="bottom: 0px;position: relative;left: 50px;top:200px">
+                <!-- <div>
+
+                    <img class="profile"  src= "../static/images/72919592_417753879153334_1723338761183428608_n.png" alt="Shashank Sundi" style="width:200px;height:200px;" >
+                </div> -->
+
+                <!-- <div >
+                    <a href="https://github.com/Shashank-Sundi/BRAIN-TUMOUR-DETECTION" target="_blank">
+                        <img alt="github link" src="../static/images/git.png" width=40" height="40" style="border-radius: 50%;margin-top: 15px;margin-left: 10px;border-color: wheat;border-style: solid;border-width: 4px;">
+                     </a>
+
+
+                     <a href="https://www.linkedin.com/in/shashank-sundi-4b78561b1" target="_blank">
+                        <img alt="linkedin" src="../static/images/Linkedin-logo-vector-PNG.png" width=50" height="50" style="border-radius: 50%;margin-top: 15px;margin-left: 10px;">
+                     </a>
+
+                     <a href="mailto:sundi.sn@gmail.com" >
+                    <img src="../static/images/gmailll.png" width=40" height="40" style="border-radius: 50%;margin-top: 15px;margin-left: 10px;border-color: wheat;border-style: solid;border-width: 4px;"> </a>
+                </div> -->
+            </div>
+    </body>
+</html>
+

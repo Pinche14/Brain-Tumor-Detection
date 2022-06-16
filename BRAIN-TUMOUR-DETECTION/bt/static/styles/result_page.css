@@ -1,0 +1,31 @@
+.bg{
+    background-image: url("https://source.unsplash.com/1600x900/?doctor");
+}
+
+.form {
+margin: 20px;
+
+border-radius: 25px;
+    border-color: black;
+    border-width: 5px;
+}
+
+.content{
+    color: rgb(255, 255, 255);
+    padding: 8px;
+    border-radius: 25px;
+    border-style: double;
+    border-color: rgb(255, 255, 255);
+    border-width: 10px;
+    
+}
+
+.profile{
+        vertical-align: middle;
+        border-radius: 50%;
+        border-style: double;
+        border-color: rgb(255, 255, 255);
+    border-width: 10px;
+    margin-top: 15px;
+
+}
